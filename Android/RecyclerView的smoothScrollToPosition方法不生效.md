@@ -10,7 +10,7 @@
 
 LinearLayoutManager的scrollToPosition和smoothScrollToPosition效果是这样的
 
-1. .如果position的item没有在完全展示在屏幕的列表内，可以正确的展示我们要的效果（item的上沿展示在列表的最上面）
+1. 如果position的item没有在完全展示在屏幕的列表内，可以正确的展示我们要的效果（item的上沿展示在列表的最上面）
 2. 如果item已经完全展示了，则不会滑动到指定的位置
 
 ## 解决
