@@ -541,7 +541,7 @@ This is the last interceptor in the chain. It makes a network call to the server
                Request.Builder builder = request.newBuilder();
                //if network not available, load in cache
                CacheControl newCacheControl = new CacheControl.Builder()
-                       .maxStale(60, TimeUnit.SECONDS).build();
+                       .maxStale(Integer.MAX_VALUE, TimeUnit.SECONDS).build();
                request = builder.cacheControl(newCacheControl).build();
                return chain.proceed(request);
            }
