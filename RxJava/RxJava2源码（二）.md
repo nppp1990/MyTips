@@ -16,6 +16,7 @@
 
    1. disposed的实现
    2. observer的onNext，OnComplete，OnError何时被调用
+   3. PS:小技巧按RxJava的命名规律，**变量s是Observer，变量parent或者d是Observable**
 
 ### 以Observable.just为例
 
