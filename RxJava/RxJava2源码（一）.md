@@ -354,3 +354,36 @@ public static boolean set(AtomicReference<Disposable> field, Disposable d) {
 2. 如果field的状态为DISPOSED，则直接返回false不能更新；否则更新成功，返回true
 3. 那么这里为什么不直接用getAndSet呢？因为要判断DISPOSED状态返回false，如果直接getAndSet就有可能在DISPOSED状态下更新导致出错
 
+#### setOnce
+
+```java
+/**
+ * Atomically sets the field to the given non-null Disposable and returns true
+ * or returns false if the field is non-null.
+ * If the target field contains the common DISPOSED instance, the supplied disposable
+ * is disposed. If the field contains other non-null Disposable, an IllegalStateException
+ * is signalled to the RxJavaPlugins.onError hook.
+ * 
+ * @param field the target field
+ * @param d the disposable to set, not null
+ * @return true if the operation succeeded, false
+ */
+public static boolean setOnce(AtomicReference<Disposable> field, Disposable d) {
+    ObjectHelper.requireNonNull(d, "d is null");// d不能为null
+    if (!field.compareAndSet(null, d)) {
+       // 如果field的value不为null则返回true
+       // 如果field的value为null则set为d，走if的逻辑
+        d.dispose();
+        if (field.get() != DISPOSED) {
+            // 如果field的状态这时候不为DISPOSED则抛出异常，比如在其他线程设置了field的状态情况
+            reportDisposableSet();
+        }
+        return false;
+    }
+    return true;
+}
+```
+
+1. 大致的意思给field设置一个非空的d，且只能设置一次
+2. **讲真没搞明白**
+
